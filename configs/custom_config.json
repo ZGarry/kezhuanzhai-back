@@ -1,0 +1,17 @@
+{
+    "data_path": "data/cb_data.pq",
+    "start_date": "2020-01-01",
+    "end_date": "2022-12-31",
+    "initial_capital": 1000000.0,
+    "strategy_type": "custom",
+    "top_n": 10,
+    "output_dir": "results/custom",
+    "strategy_params": {
+        "name": "低价策略",
+        "indicators": ["close"],
+        "weights": [-1.0],
+        "filters": {
+            "left_years": [">", 0.5]
+        }
+    }
+} 

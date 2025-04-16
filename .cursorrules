@@ -1,0 +1,148 @@
+前端页面页面逻辑都在app下，组件都在components下，lib负责工具函数逻辑，避免把复杂逻辑写到页面逻辑里。
+
+前端代码都在CLong目录下,后端api在api_server.py
+
+这个代码项目是一个可转债投资分析和回测系统
+这是一个综合性的可转债（可转换债券）分析和交易策略回测系统，包含后端分析引擎和前端可视化界面。项目的主要功能包括：
+核心功能：
+可转债数据分析与处理：
+通过 data_processor.py 加载和处理可转债数据
+实现了高效的数据管理器 DataManager 用于访问各类数据
+投资策略回测：
+实现了多种可转债投资策略：
+低价策略（low_price_strategy.py）
+双低策略（double_low_strategy.py）- 基于转股溢价率和纯债溢价率的综合指标选券
+提供完整的回测框架，包括交易记录、持仓管理、绩效分析等
+API 服务器：
+使用 FastAPI 实现的 api_server.py 为前端提供数据接口
+提供可转债市场概览、分布数据、排名数据、回测结果等接口
+Web 前端界面：
+使用 Next.js 框架（TypeScript）开发的前端应用（CLong 目录）
+包含多个功能模块：
+可转债数据中心
+策略回测页面
+投资组合管理
+市场监控
+技术栈：
+后端：
+Python
+Pandas（数据处理）
+FastAPI（API服务）
+Matplotlib（图表生成）
+前端：
+Next.js
+TypeScript
+TailwindCSS
+各种数据可视化组件
+项目特点：
+专注于可转债市场的分析和投资策略回测
+实现了多种常见的可转债投资策略（低价、双低）
+提供完整的数据分析工具和可视化界面
+结合了本地回测和网页交互的功能
+从 WORKDOC.md 文件可以看出，项目正在持续改进中，包括速度优化和页面性能提升等任务。
+总之，这是一个用于可转债投资分析、策略回测和投资决策的完整系统，可帮助投资者分析可转债市场数据、测试不同投资策略的绩效，并通过可视化界面直观地展示结果。
+
+# 持仓状态模型
+class PortfolioState:
+    total_assets: float  # 总资产
+    cash: float  # 现金
+    positions: dict[str, Position]  # 当前持仓，key为股票代码
+    timestamp: datetime  # 当前时间戳
+
+class Position:
+    symbol: str  # 股票代码
+    quantity: int  # 持仓数量
+    cost_basis: float  # 持仓成本
+    market_value: float  # 市场价值
+    last_update: datetime  # 最后更新时间
+
+# 每日持仓快照模型
+class DailySnapshot:
+    date: date  # 日期
+    portfolio_state: PortfolioState  # 当日持仓状态
+
+
+可转债数据文件数据如下：？
+# 可转债数据字段说明
+
+## 基本信息字段
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| code | str | 转债代码 |
+| trade_date | datetime | 交易日期 |
+| name | str | 转债简称 |
+
+## 转债价格和交易数据
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| pre_close | float | 前收盘价 |
+| open | float | 开盘价 |
+| high | float | 最高价 |
+| low | float | 最低价 |
+| close | float | 收盘价 |
+| pct_chg | float | 涨跌幅 |
+| vol | float | 成交量 |
+| amount | float | 成交额 |
+
+## 正股相关数据
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| code_stk | float | 正股代码 |
+| pre_close_stk | float | 正股前收盘价 |
+| open_stk | float | 正股开盘价 |
+| high_stk | float | 正股最高价 |
+| low_stk | float | 正股最低价 |
+| close_stk | float | 正股收盘价 |
+| pct_chg_stk | float | 正股涨跌幅 |
+| vol_stk | float | 正股成交量 |
+| amount_stk | float | 正股成交额 |
+
+## 正股估值指标
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| pe_ttm | float | 市盈率（TTM，亏损的PE为空） |
+| pb | float | 市净率（总市值/净资产） |
+| ps_ttm | float | 市销率（TTM） |
+| total_share | float | 总股本 （万股） |
+| float_share | float | 流通股本 （万股） |
+| total_mv | float | 总市值 （万元） |
+| circ_mv | float | 流通市值（万元） |
+| volatility_stk | float | 正股年化波动率 |
+
+## 转债特性指标
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| is_call | str | 强赎状态 |
+| conv_price | float | 转股价格 |
+| conv_value | float | 转股价值 |
+| conv_prem | float | 转股溢价率 |
+| theory_conv_prem | float | 理论溢价率 |
+| mod_conv_prem | float | 修正溢价率 |
+| dblow | float | 双低因子 |
+| issue_size | float | 发行规模 |
+| remain_size | float | 剩余规模 |
+| remain_cap | float | 剩余市值 |
+| turnover | float | 换手率 |
+| cap_mv_rate | float | 转债市占比 |
+| list_days | float | 上市天数 |
+| left_years | float | 剩余年限 |
+| ytm | float | 到期收益率 |
+| pure_value | float | 纯债价值 |
+| bond_prem | float | 纯债溢价率 |
+| option_value | float | 期权价值 |
+| theory_value | float | 理论价值 |
+| theory_bias | float | 理论偏离度 |
+
+## 其他信息
+| 字段名 | 类型 | 说明 |
+|--------|------|------|
+| rating | enum | 外部评级 |
+| yy_rating | enum | 三方评级 |
+| orgform | str | 企业类型 |
+| area | str | 地域 |
+| industry_1 | str | 一级行业 |
+| industry_2 | str | 二级行业 |
+| industry_3 | str | 三级行业 |
+| maturity_put_price | float | 到期赎回价格 |
+| maturity | int | 发行年限 |
+| popularity_ranking | int | 热度排名 | 

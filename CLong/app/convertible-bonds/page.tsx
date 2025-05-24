@@ -76,6 +76,8 @@ export default function ConvertibleBondsPage() {
               onChange={handleDateChange}
               placeholder="选择日期"
               className="w-40"
+              enableTradingDatesOnly={true}
+              autoSetLastValidDate={true}
             />
             <Button
               variant="outline"

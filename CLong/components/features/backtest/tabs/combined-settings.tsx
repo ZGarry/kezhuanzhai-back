@@ -213,9 +213,9 @@ export default function CombinedSettings({
               onChange={(date) => updateBacktestSettings('startDate', date)}
               placeholder="选择开始日期"
               className="w-full"
-              defaultValue="2018-01-01"
+              enableTradingDatesOnly={true}
+              autoSetFirstValidDate={true}
             />
-            <p className="text-xs text-muted-foreground">推荐2018-01-01到2023-12-31</p>
           </div>
           <div className="space-y-2">
             <Label>结束日期</Label>
@@ -224,9 +224,9 @@ export default function CombinedSettings({
               onChange={(date) => updateBacktestSettings('endDate', date)}
               placeholder="选择结束日期"
               className="w-full"
-              defaultValue="2023-12-31"
+              enableTradingDatesOnly={true}
+              autoSetLastValidDate={true}
             />
-            <p className="text-xs text-muted-foreground">不要选择未来日期</p>
           </div>
           <div className="space-y-2">
             <Label>持有数量</Label>

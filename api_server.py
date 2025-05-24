@@ -1,6 +1,6 @@
 from fastapi import FastAPI, WebSocket, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Any
 from datetime import datetime, date
 from pydantic import BaseModel
 from enum import Enum
@@ -733,6 +733,36 @@ async def get_available_factors():
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"获取因子列表失败: {str(e)}")
+
+@app.get("/api/trading-dates", response_model=Dict[str, Any])
+async def get_trading_dates():
+    """获取可用的交易日期范围"""
+    try:
+        # 获取数据管理器
+        data_manager = global_data_manager
+        
+        # 获取所有交易日期
+        trading_dates = data_manager.get_trading_dates()
+        
+        if not trading_dates:
+            raise HTTPException(status_code=404, detail="没有可用的交易日期")
+        
+        # 格式化日期为字符串
+        start_date = trading_dates[0].strftime("%Y-%m-%d")
+        end_date = trading_dates[-1].strftime("%Y-%m-%d")
+        all_dates = [date.strftime("%Y-%m-%d") for date in trading_dates]
+        
+        return {
+            "status": "success",
+            "data": {
+                "start_date": start_date,
+                "end_date": end_date,
+                "all_dates": all_dates,
+                "total_days": len(trading_dates)
+            }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"获取交易日期失败: {str(e)}")
 
 def main():
     # 创建策略

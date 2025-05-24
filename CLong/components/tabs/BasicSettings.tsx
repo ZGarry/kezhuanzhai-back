@@ -64,11 +64,15 @@ export default function BasicSettings({
             label="回测开始日期"
             date={settings.startDate}
             setDate={(date) => updateSettings('startDate', date)}
+            enableTradingDatesOnly={true}
+            autoSetFirstValidDate={true}
           />
           <DatePicker
             label="回测结束日期"
             date={settings.endDate}
             setDate={(date) => updateSettings('endDate', date)}
+            enableTradingDatesOnly={true}
+            autoSetLastValidDate={true}
           />
         </div>
 

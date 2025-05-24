@@ -100,6 +100,12 @@ export async function fetchRankingData(date?: string, limit?: number) {
   return fetchApi(url);
 }
 
+// 交易日期范围API
+export async function fetchTradingDates() {
+  const url = buildUrl('/api/trading-dates');
+  return fetchApi(url);
+}
+
 // 回测API
 export async function runBacktest(params: any) {
   // 从params中提取strategy_type，其余作为请求体
@@ -144,6 +150,7 @@ export const api = {
   fetchMarketOverview,
   fetchDistributionData,
   fetchRankingData,
+  fetchTradingDates,
   runBacktest,
   fetchFieldInfo,
   fetchFactors

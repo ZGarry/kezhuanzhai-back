@@ -47,6 +47,8 @@ export default function BasicSettings({
                 onChange={(date) => updateSettings('startDate', date)}
                 placeholder="选择开始日期"
                 className="w-full"
+                enableTradingDatesOnly={true}
+                autoSetFirstValidDate={true}
               />
             </div>
             
@@ -57,6 +59,8 @@ export default function BasicSettings({
                 onChange={(date) => updateSettings('endDate', date)}
                 placeholder="选择结束日期"
                 className="w-full"
+                enableTradingDatesOnly={true}
+                autoSetLastValidDate={true}
               />
             </div>
             

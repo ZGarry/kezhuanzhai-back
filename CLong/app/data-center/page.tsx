@@ -8,12 +8,7 @@ import { AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
+import { DatePicker } from "@/components/ui/datepicker";
 import { cn } from "@/lib/utils";
 import MarketOverview from "./components/MarketOverview";
 import DistributionCharts from "./components/DistributionCharts";
@@ -159,25 +154,14 @@ export default function DataCenter() {
           </p>
         </div>
         <div className="flex mt-4 md:mt-0 space-x-2">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" className="w-[240px] justify-start">
-                {selectedDate ? (
-                  format(selectedDate, "yyyy年MM月dd日")
-                ) : (
-                  "选择日期"
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
-              <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={handleDateChange}
-                initialFocus
-              />
-            </PopoverContent>
-          </Popover>
+          <DatePicker
+            selected={selectedDate}
+            onChange={handleDateChange}
+            placeholder="选择日期"
+            className="w-[240px]"
+            enableTradingDatesOnly={true}
+            autoSetLastValidDate={true}
+          />
           <Button 
             variant="outline" 
             onClick={handleRefresh}

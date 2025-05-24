@@ -1,0 +1,35 @@
+{
+  "data_path": "data/cb_data.pq",
+  "start_date": "2020-01-01",
+  "end_date": "2024-12-31",
+  "initial_capital": 1000000.0,
+  "strategy_type": "custom",
+  "top_n": 10,
+  "name": "总市值单因子策略",
+  "output_dir": "results/single_factor/total_mv",
+  "strategy_params": {
+    "indicators": [
+      "total_mv"
+    ],
+    "weights": [
+      1.0
+    ],
+    "filters": {
+      "left_years": [
+        ">",
+        0.5
+      ],
+      "list_days": [
+        ">",
+        30
+      ]
+    }
+  },
+  "factor_info": {
+    "factor_id": "total_mv",
+    "factor_name": "总市值",
+    "factor_description": "正股总市值",
+    "factor_category": "正股",
+    "factor_weight": 1.0
+  }
+}

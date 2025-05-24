@@ -1,0 +1,35 @@
+{
+  "data_path": "data/cb_data.pq",
+  "start_date": "2020-01-01",
+  "end_date": "2024-12-31",
+  "initial_capital": 1000000.0,
+  "strategy_type": "custom",
+  "top_n": 10,
+  "name": "成交额单因子策略",
+  "output_dir": "results/single_factor/amount",
+  "strategy_params": {
+    "indicators": [
+      "amount"
+    ],
+    "weights": [
+      1.0
+    ],
+    "filters": {
+      "left_years": [
+        ">",
+        0.5
+      ],
+      "list_days": [
+        ">",
+        30
+      ]
+    }
+  },
+  "factor_info": {
+    "factor_id": "amount",
+    "factor_name": "成交额",
+    "factor_description": "当日成交额",
+    "factor_category": "市场活跃度",
+    "factor_weight": 1.0
+  }
+}

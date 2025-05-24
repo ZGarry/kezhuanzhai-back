@@ -1,0 +1,35 @@
+{
+  "data_path": "data/cb_data.pq",
+  "start_date": "2020-01-01",
+  "end_date": "2024-12-31",
+  "initial_capital": 1000000.0,
+  "strategy_type": "custom",
+  "top_n": 10,
+  "name": "发行规模单因子策略",
+  "output_dir": "results/single_factor/issue_size",
+  "strategy_params": {
+    "indicators": [
+      "issue_size"
+    ],
+    "weights": [
+      1.0
+    ],
+    "filters": {
+      "left_years": [
+        ">",
+        0.5
+      ],
+      "list_days": [
+        ">",
+        30
+      ]
+    }
+  },
+  "factor_info": {
+    "factor_id": "issue_size",
+    "factor_name": "发行规模",
+    "factor_description": "债券发行规模",
+    "factor_category": "规模",
+    "factor_weight": 1.0
+  }
+}

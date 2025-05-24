@@ -1,0 +1,35 @@
+{
+  "data_path": "data/cb_data.pq",
+  "start_date": "2020-01-01",
+  "end_date": "2024-12-31",
+  "initial_capital": 1000000.0,
+  "strategy_type": "custom",
+  "top_n": 10,
+  "name": "理论价值单因子策略",
+  "output_dir": "results/single_factor/theory_value",
+  "strategy_params": {
+    "indicators": [
+      "theory_value"
+    ],
+    "weights": [
+      1.0
+    ],
+    "filters": {
+      "left_years": [
+        ">",
+        0.5
+      ],
+      "list_days": [
+        ">",
+        30
+      ]
+    }
+  },
+  "factor_info": {
+    "factor_id": "theory_value",
+    "factor_name": "理论价值",
+    "factor_description": "债券理论价值",
+    "factor_category": "价值",
+    "factor_weight": 1.0
+  }
+}

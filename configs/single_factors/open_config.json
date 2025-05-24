@@ -1,0 +1,35 @@
+{
+  "data_path": "data/cb_data.pq",
+  "start_date": "2020-01-01",
+  "end_date": "2024-12-31",
+  "initial_capital": 1000000.0,
+  "strategy_type": "custom",
+  "top_n": 10,
+  "name": "开盘价单因子策略",
+  "output_dir": "results/single_factor/open",
+  "strategy_params": {
+    "indicators": [
+      "open"
+    ],
+    "weights": [
+      -1.0
+    ],
+    "filters": {
+      "left_years": [
+        ">",
+        0.5
+      ],
+      "list_days": [
+        ">",
+        30
+      ]
+    }
+  },
+  "factor_info": {
+    "factor_id": "open",
+    "factor_name": "开盘价",
+    "factor_description": "转债开盘价",
+    "factor_category": "价格",
+    "factor_weight": -1.0
+  }
+}

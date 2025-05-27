@@ -7,8 +7,8 @@ import { api } from '@/lib/api';
 const defaultBacktestSettings: BacktestSettings = {
   holdingPeriod: 1,
   holdingQuantity: 10,
-  startDate: new Date("2018-01-01"),
-  endDate: new Date("2023-12-31"),
+  startDate: undefined,
+  endDate: undefined,
   tradingTime: 'close',
   benchmark: 'sh000001'
 };

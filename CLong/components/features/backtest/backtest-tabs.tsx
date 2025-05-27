@@ -42,7 +42,6 @@ export default function BacktestTabs() {
       // 检查日期范围
       const today = new Date();
       const defaultStartDate = new Date('2018-01-02');
-      const defaultEndDate = new Date('2024-12-31');
       
       // 设置开始和结束日期 - 确保在合理范围内
       let startDate = backtestSettings.startDate
@@ -55,7 +54,7 @@ export default function BacktestTabs() {
         ? backtestSettings.endDate instanceof Date
           ? backtestSettings.endDate
           : new Date(backtestSettings.endDate)
-        : defaultEndDate;
+        : today; // 如果没有设置结束日期，使用今天作为fallback
       
       // 验证日期
       if (endDate > today) {

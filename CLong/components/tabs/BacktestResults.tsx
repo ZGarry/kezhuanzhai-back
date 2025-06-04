@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import StatCard from "@/components/common/StatCard";
-import { BacktestResult } from "@/app/types/backtest";
+import { BacktestResult } from "@/types/app-backtest";
 import PerformanceChart from "@/components/charts/PerformanceChart";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -94,7 +94,7 @@ export default function BacktestResults({ result }: BacktestResultsProps) {
                         {trade.type === 'buy' ? '买入' : '卖出'}
                       </span>
                       <span className="ml-4">{trade.quantity}股</span>
-                      <span className="ml-4">¥{trade.price.toFixed(2)}</span>
+                      <span className="ml-4">¥{trade.price?.toFixed(2) || '-'}</span>
                       {trade.profit !== undefined && (
                         <span className={`ml-4 ${trade.profit >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                           {trade.profit >= 0 ? '+' : ''}{trade.profit.toFixed(2)}%
@@ -121,7 +121,7 @@ export default function BacktestResults({ result }: BacktestResultsProps) {
                   <div className="flex items-center gap-1">
                     {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                       // 计算显示的页码范围
-                      let pageNum;
+                      let pageNum: number;
                       if (totalPages <= 5) {
                         pageNum = i + 1;
                       } else if (currentPage <= 3) {

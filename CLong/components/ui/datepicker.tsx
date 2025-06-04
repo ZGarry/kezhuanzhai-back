@@ -48,7 +48,7 @@ export function DatePicker({
     if (enableTradingDatesOnly || autoSetLastValidDate || autoSetFirstValidDate) {
       setLoading(true);
       api.fetchTradingDates()
-        .then(response => {
+        .then((response: any) => {
           if (response.status === 'success') {
             const dates = response.data.all_dates;
             setValidDates(dates);
@@ -214,9 +214,9 @@ export function DatePicker({
           locale={zhCN}
           // 月份名称本地化
           formatters={{
-            formatCaption: (date, options) => 
+            formatCaption: (date: Date, options: any) =>
               format(date, 'yyyy年 MM月', { locale: zhCN }),
-            formatWeekday: (date) => 
+            formatDay: (date: any) =>
               format(date, 'EEE', { locale: zhCN }).charAt(0),
           }}
         />

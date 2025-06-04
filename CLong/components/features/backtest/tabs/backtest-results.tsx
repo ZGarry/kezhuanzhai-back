@@ -41,7 +41,7 @@ export default function BacktestResults({ result }: BacktestResultsProps) {
   
   // 处理性能指标
   const metrics = {
-    total_return: originalResponse.总收益率 || result.totalReturn || 0,  // 使用正确的总收益率
+    total_return: originalResponse.总收益率 || 0,  // 移除对result.totalReturn的引用
     annual_return: originalResponse.年化收益率 || result.annualReturn,
     sharpe_ratio: originalResponse.夏普比率 || result.sharpeRatio,
     max_drawdown: originalResponse.最大回撤 || result.maxDrawdown,

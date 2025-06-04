@@ -317,7 +317,7 @@ export default function CombinedSettings({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {factorSettings.selectedFactors.length === 0 ? (
               <div className="col-span-2 text-center py-4 text-muted-foreground">
-                还未选择任何因子，请点击"添加因子"按钮开始构建策略
+                还未选择任何因子，请点击&ldquo;添加因子&rdquo;按钮开始构建策略
               </div>
             ) : (
               factorSettings.selectedFactors.map((factor, index) => (

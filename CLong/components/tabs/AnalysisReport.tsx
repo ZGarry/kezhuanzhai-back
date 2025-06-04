@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { BacktestResult } from "@/app/types/backtest";
+import { BacktestResult } from "@/types/app-backtest";
 import TradeHistory from "@/components/trades/TradeHistory";
 
 interface AnalysisReportProps {

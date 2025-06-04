@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 
 // 动态导入Plotly组件，禁用SSR
+// @ts-ignore
 const Plot = dynamic(() => import('react-plotly.js'), { ssr: false });
 
 interface PerformanceChartProps {
@@ -13,6 +14,18 @@ interface PerformanceChartProps {
 
 export default function PerformanceChart({ returns, dates }: PerformanceChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // 响应容器大小变化 - 将useEffect移到组件顶部，避免条件调用
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.Plotly && containerRef.current) {
+        window.Plotly.Plots.resize(containerRef.current);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // 确保数据有效
   const validReturns = Array.isArray(returns) ? returns.filter(r => !isNaN(Number(r))) : [];
@@ -47,13 +60,13 @@ export default function PerformanceChart({ returns, dates }: PerformanceChartPro
   const zeroLine = {
     x: [chartDates[0], chartDates[chartDates.length - 1]],
     y: [0, 0],
-    type: 'scatter',
-    mode: 'lines',
+    type: 'scatter' as const,
+    mode: 'lines' as const,
     name: '基准线',
     line: {
       color: 'rgba(200, 200, 200, 0.5)',
       width: 1,
-      dash: 'dash',
+      dash: 'dash' as const,
     },
     showlegend: false,
   };
@@ -63,14 +76,14 @@ export default function PerformanceChart({ returns, dates }: PerformanceChartPro
     {
       x: chartDates,
       y: formattedReturns,
-      type: 'scatter',
-      mode: 'lines',
+      type: 'scatter' as const,
+      mode: 'lines' as const,
       name: '累计收益率',
       line: {
         color: formattedReturns[formattedReturns.length - 1] >= 0 ? 'rgb(52, 168, 83)' : 'rgb(234, 67, 53)',
         width: 2,
       },
-      fill: 'tozeroy',
+      fill: 'tozeroy' as const,
       fillcolor: formattedReturns[formattedReturns.length - 1] >= 0 ? 'rgba(52, 168, 83, 0.1)' : 'rgba(234, 67, 53, 0.1)',
     },
     zeroLine
@@ -102,7 +115,7 @@ export default function PerformanceChart({ returns, dates }: PerformanceChartPro
       x: 0,
       y: 1,
     },
-    hovermode: 'closest',
+    hovermode: 'closest' as const,
     plot_bgcolor: 'rgba(0,0,0,0)',
     paper_bgcolor: 'rgba(0,0,0,0)',
     font: {
@@ -111,7 +124,7 @@ export default function PerformanceChart({ returns, dates }: PerformanceChartPro
     shapes: [
       // 标记0线
       {
-        type: 'line',
+        type: 'line' as const,
         x0: chartDates[0],
         y0: 0,
         x1: chartDates[chartDates.length - 1],
@@ -119,7 +132,7 @@ export default function PerformanceChart({ returns, dates }: PerformanceChartPro
         line: {
           color: 'rgba(200, 200, 200, 0.5)',
           width: 1,
-          dash: 'dash',
+          dash: 'dash' as const,
         }
       }
     ],
@@ -128,8 +141,8 @@ export default function PerformanceChart({ returns, dates }: PerformanceChartPro
       {
         x: chartDates[chartDates.length - 1],
         y: formattedReturns[formattedReturns.length - 1],
-        xref: 'x',
-        yref: 'y',
+        xref: 'x' as const,
+        yref: 'y' as const,
         text: `${formattedReturns[formattedReturns.length - 1].toFixed(2)}%`,
         showarrow: true,
         arrowhead: 0,
@@ -151,27 +164,21 @@ export default function PerformanceChart({ returns, dates }: PerformanceChartPro
     displaylogo: false,
   };
 
-  // 响应容器大小变化
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.Plotly && containerRef.current) {
-        window.Plotly.Plots.resize(containerRef.current);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   console.log("Chart data:", { dates: chartDates, returns: formattedReturns });
 
   return (
     <div ref={containerRef} className="w-full h-[400px] rounded-lg overflow-hidden border border-border">
+      {/* @ts-ignore: react-plotly.js类型定义问题 */}
       <Plot
+        // @ts-ignore
         data={plotData}
+        // @ts-ignore
         layout={layout}
+        // @ts-ignore
         config={config}
+        // @ts-ignore
         useResizeHandler={true}
+        // @ts-ignore
         style={{ width: '100%', height: '100%' }}
       />
     </div>

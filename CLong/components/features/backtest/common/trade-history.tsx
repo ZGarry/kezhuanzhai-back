@@ -33,7 +33,7 @@ export default function TradeHistory({ trades }: TradeHistoryProps) {
               <TableCell>{trade.symbol}</TableCell>
               <TableCell>{trade.type === 'buy' ? '买入' : '卖出'}</TableCell>
               <TableCell>{trade.quantity}</TableCell>
-              <TableCell>{trade.price.toFixed(2)}</TableCell>
+              <TableCell>{trade.price?.toFixed(2) || '-'}</TableCell>
               <TableCell>{trade.profit ? `${trade.profit > 0 ? '+' : ''}${trade.profit.toFixed(2)}` : '-'}</TableCell>
             </TableRow>
           )) : (

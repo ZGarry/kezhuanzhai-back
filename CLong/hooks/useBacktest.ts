@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { BacktestSettings, FactorSettings, BacktestResult } from '@/app/types/backtest';
+import { BacktestSettings, FactorSettings, BacktestResult } from '@/types/app-backtest';
 
 const defaultBacktestSettings: BacktestSettings = {
   holdingPeriod: 1,
@@ -16,7 +16,9 @@ const defaultFactorSettings: FactorSettings = {
   excludeMode: 'all',
   excludeNewDays: 0,
   excludeMarket: null,
-  customFactors: []
+  customFactors: [],
+  selectedFactors: [],
+  filters: []
 };
 
 export function useBacktest() {
@@ -42,7 +44,9 @@ export function useBacktest() {
         maxDrawdown: -8.2,
         sharpeRatio: 1.85,
         winRate: 68.5,
-        trades: []
+        trades: [],
+        returns: [],
+        dates: []
       });
     } catch (error) {
       console.error('回测执行失败:', error);

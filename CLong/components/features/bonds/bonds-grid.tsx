@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import { ColDef, GridReadyEvent, ColumnApi, GridApi } from 'ag-grid-community';
+import { ColDef, GridReadyEvent, GridApi } from 'ag-grid-community';
 import { ConvertibleBond } from '@/types/bond';
 import { numberRenderer, percentRenderer, coloredNumberRenderer } from '@/components/ui/renderers';
 
@@ -26,7 +26,6 @@ const ConvertibleBondsGrid: React.FC<ConvertibleBondsGridProps> = ({
   selectable = true,
 }) => {
   const [gridApi, setGridApi] = useState<GridApi | null>(null);
-  const [columnApi, setColumnApi] = useState<ColumnApi | null>(null);
   
   // 列定义
   const columnDefs: ColDef[] = [
@@ -146,11 +145,10 @@ const ConvertibleBondsGrid: React.FC<ConvertibleBondsGridProps> = ({
   // 表格就绪事件处理
   const onGridReady = (params: GridReadyEvent) => {
     setGridApi(params.api);
-    setColumnApi(params.columnApi);
     
     // 设置默认排序
-    if (defaultSortField && params.columnApi.getColumn(defaultSortField)) {
-      params.columnApi.applyColumnState({
+    if (defaultSortField) {
+      params.api.applyColumnState({
         state: [{ colId: defaultSortField, sort: defaultSortDirection }],
         defaultState: { sort: null },
       });

@@ -36,7 +36,7 @@ export default function DatePicker({
     if (enableTradingDatesOnly || autoSetLastValidDate || autoSetFirstValidDate) {
       setLoading(true);
       api.fetchTradingDates()
-        .then(response => {
+        .then((response: any) => {
           if (response.status === 'success') {
             const dates = response.data.all_dates;
             setValidDates(dates);

@@ -25,6 +25,7 @@ export interface FactorSettings {
   customFactors: string[];
   selectedFactors: SelectedFactor[];
   filters: FilterCondition[];
+  strategyName?: string;
 }
 
 export interface SelectedFactor {
@@ -79,6 +80,9 @@ export interface BacktestResult {
   maxDrawdown: number;
   sharpeRatio: number;
   winRate: number;
+  volatility?: number;
+  beta?: number;
+  alpha?: number;
   trades: Trade[];
   returns: number[];
   dates: string[];

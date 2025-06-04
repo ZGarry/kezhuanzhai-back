@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -185,7 +185,7 @@ export default function FactorSettingsComponent({
   };
 
   // 生成策略JSON
-  const generateStrategyJson = () => {
+  const generateStrategyJson = useCallback(() => {
     // 提取指标和权重
     const indicators = (settings.selectedFactors || []).map(factor => factor.id);
     const weights = (settings.selectedFactors || []).map(factor => factor.weight);
@@ -199,12 +199,12 @@ export default function FactorSettingsComponent({
     // 构建策略配置
     const strategyConfig = {
       data_path: "data/cb_data.pq",
-      start_date: backtestSettings?.startDate,
-      end_date: backtestSettings?.endDate,
-      initial_capital: backtestSettings?.initialCapital,
+      start_date: backtestSettings?.startDate || "2020-01-01",
+      end_date: backtestSettings?.endDate || "2024-12-31", 
+      initial_capital: backtestSettings?.initialCapital || 1000000.0,
       strategy_type: "custom",
-      top_n: backtestSettings?.topN,
-      name: "自定义策略",
+      top_n: backtestSettings?.topN || 10,
+      name: settings.strategyName || "自定义策略",
       output_dir: "results/custom",
       strategy_params: {
         indicators: indicators,
@@ -214,23 +214,25 @@ export default function FactorSettingsComponent({
     };
     
     setStrategyJson(JSON.stringify(strategyConfig, null, 2));
-  };
+  }, [settings, backtestSettings]);
 
+  // 初始化默认值
   useEffect(() => {
     // 初始化settings，确保选择因子和过滤条件有默认值
     if (!settings.selectedFactors) {
-      updateSettings('selectedFactors', []);
+      setSettings({ ...settings, selectedFactors: [] });
     }
     
     if (!settings.filters) {
-      updateSettings('filters', []);
+      setSettings({ ...settings, filters: [] });
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // 保持空依赖数组，只在组件挂载时运行一次
 
   // 当参数变化时更新JSON
   useEffect(() => {
     generateStrategyJson();
-  }, [settings, backtestSettings]);
+  }, [generateStrategyJson]);
 
   // 复制JSON到剪贴板
   const copyJsonToClipboard = () => {

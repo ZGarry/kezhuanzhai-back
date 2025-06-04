@@ -5,13 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-interface FactorSettings {
-  excludeMode: 'all' | 'any';
-  excludeNewDays: number;
-  excludeMarket: 'sh' | 'sz' | null;
-  customFactors: string[];
-}
+import { FactorSettings } from "@/types/app-backtest";
 
 interface FactorSettingsProps {
   settings: FactorSettings;

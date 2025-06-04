@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import { ColDef } from 'ag-grid-community';
 import { 
     PriceChangeRenderer, 
     RatingRenderer, 
@@ -14,10 +15,10 @@ import {
 } from './CustomCellRenderers';
 
 const ConvertibleBondsGrid = () => {
-    const [rowData, setRowData] = useState([]);
-    const gridRef = useRef(null);
+    const [rowData, setRowData] = useState<any[]>([]);
+    const gridRef = useRef<AgGridReact>(null);
 
-    const [columnDefs] = useState([
+    const [columnDefs] = useState<ColDef[]>([
         { 
             field: 'code', 
             headerName: '转债代码', 
@@ -51,7 +52,7 @@ const ConvertibleBondsGrid = () => {
             headerName: '成交量', 
             sortable: true, 
             filter: true,
-            valueFormatter: (params) => params.value ? params.value.toLocaleString() : '-',
+            valueFormatter: (params: any) => params.value ? params.value.toLocaleString() : '-',
             cellClass: 'ag-cell-number'
         },
         { 
@@ -59,7 +60,7 @@ const ConvertibleBondsGrid = () => {
             headerName: '成交额', 
             sortable: true, 
             filter: true,
-            valueFormatter: (params) => params.value ? params.value.toLocaleString() : '-',
+            valueFormatter: (params: any) => params.value ? params.value.toLocaleString() : '-',
             cellClass: 'ag-cell-number'
         },
         { 
@@ -102,7 +103,7 @@ const ConvertibleBondsGrid = () => {
             headerName: '剩余规模', 
             sortable: true, 
             filter: true,
-            cellRenderer: (params) => {
+            cellRenderer: (params: any) => {
                 if (params.value === null || params.value === undefined) return <span className="text-right">-</span>;
                 return <div className="text-right">{(params.value / 100000000).toFixed(2)}</div>;
             }

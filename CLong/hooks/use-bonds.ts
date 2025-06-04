@@ -52,7 +52,7 @@ export function useBonds({
       
       console.log(`开始获取可转债数据，日期: ${dateParam || '最新'}`);
       
-      const response = await api.fetchConvertibleBonds(dateParam);
+      const response = await api.fetchConvertibleBonds(dateParam) as any;
       
       if (response.status === 'success') {
         // 设置数据

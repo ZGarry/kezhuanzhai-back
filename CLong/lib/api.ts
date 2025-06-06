@@ -2,8 +2,10 @@
  * 网络请求函数集中管理
  */
 
-// API基础URL
-const API_BASE_URL = 'http://localhost:8000';
+import { getApiBaseUrl } from './config';
+
+// API基础URL - 根据环境自动选择
+const API_BASE_URL = getApiBaseUrl();
 
 // 基础请求函数
 async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<T> {

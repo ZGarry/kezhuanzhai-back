@@ -11,6 +11,7 @@ from create_strategy import create_strategy
 from data_manager import DataManager
 from after_backtest_report import generate_backtest_reports
 import polars as pl
+import os
 
 # 全局数据预加载
 print("正在加载可转债数据...")
@@ -83,11 +84,11 @@ class BacktestParams(BaseModel):
 
 app = FastAPI()
 
-# 配置CORS
+# 配置CORS - 兼容所有环境
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
-    allow_credentials=True,
+    allow_origins=["*"],  # 允许所有域名，简化配置
+    allow_credentials=False,  # 设置为False以支持通配符
     allow_methods=["*"],
     allow_headers=["*"],
 )
